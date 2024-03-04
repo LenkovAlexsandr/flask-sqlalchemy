@@ -5,7 +5,7 @@ from .jobs import Jobs
 
 
 blueprint = flask.Blueprint(
-    'news_api',
+    'jobs_api',
     __name__,
     template_folder='templates'
 )
@@ -28,12 +28,12 @@ def get_jobs():
 @blueprint.route('/api/jobs/<int:job_id>', methods=['GET'])
 def get_one_jobs(job_id):
     db_sess = db_session.create_session()
-    news = db_sess.query(Jobs).get(job_id)
-    if not news:
+    jobs = db_sess.query(Jobs).get(job_id)
+    if not jobs:
         return make_response(jsonify({'error': 'Not found'}), 404)
     return jsonify(
         {
-            'jobs': news.to_dict(only=('id', 'team_leader', 'job', 'work_size',
+            'jobs': jobs.to_dict(only=('id', 'team_leader', 'job', 'work_size',
                                        'collaborators', 'start_date', 'end_date', 'is_finished'))
         }
     )
