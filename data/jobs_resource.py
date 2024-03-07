@@ -18,8 +18,7 @@ class JobsResource(Resource):
         session = db_session.create_session()
         jobs = session.query(Jobs).get(jobs_id)
         return jsonify({'jobs': jobs.to_dict(
-            only=('id', 'team_leader', 'job', 'work_size', 'collaborators',
-                  'start_date', 'end_date', 'is_finished'))})
+            only=('team_leader', 'job', 'work_size', 'collaborators', 'is_finished'))})
 
     def delete(self, jobs_id):
         abort_if_jobs_not_found(jobs_id)
@@ -35,20 +34,16 @@ class JobsListResource(Resource):
         session = db_session.create_session()
         jobs = session.query(Jobs).all()
         return jsonify({'jobs': [item.to_dict(
-            only=('id', 'team_leader', 'job', 'work_size', 'collaborators',
-                  'start_date', 'end_date', 'is_finished')) for item in jobs]})
+            only=('team_leader', 'job', 'work_size', 'collaborators', 'is_finished')) for item in jobs]})
 
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
         jobs = Jobs(
-            id=args['id'],
             team_leader=args['team_leader'],
             job=args['job'],
             work_size=args['work_size'],
             collaborators=args['collaborators'],
-            start_date=args['start_date'],
-            end_date=args['end_date'],
             is_finished=args['is_finished']
         )
         session.add(jobs)

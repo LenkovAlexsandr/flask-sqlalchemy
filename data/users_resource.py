@@ -18,8 +18,8 @@ class UsersResource(Resource):
         session = db_session.create_session()
         users = session.query(User).get(users_id)
         return jsonify({'users': users.to_dict(
-            only=('id', 'surname', 'name', 'age', 'position', 'speciality', 'address', 'email',
-                  'hashed_password', 'modified_date'))})
+            only=('surname', 'name', 'age', 'position', 'speciality', 'address', 'email',
+                  'hashed_password'))})
 
     def delete(self, users_id):
         abort_if_users_not_found(users_id)
@@ -35,14 +35,13 @@ class UsersListResource(Resource):
         session = db_session.create_session()
         users = session.query(User).all()
         return jsonify({'users': [item.to_dict(
-            only=('id', 'surname', 'name', 'age', 'position', 'speciality', 'address', 'email',
-                  'hashed_password', 'modified_date')) for item in users]})
+            only=('surname', 'name', 'age', 'position', 'speciality', 'address', 'email',
+                  'hashed_password')) for item in users]})
 
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
         users = User(
-            id=args['id'],
             surname=args['surname'],
             name=args['name'],
             age=args['age'],
@@ -50,8 +49,7 @@ class UsersListResource(Resource):
             speciality=args['speciality'],
             address=args['address'],
             email=args['email'],
-            hashed_password=args['hashed_password'],
-            modified_date=args['modified_date']
+            hashed_password=args['hashed_password']
         )
         session.add(users)
         session.commit()

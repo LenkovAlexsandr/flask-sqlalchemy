@@ -1,0 +1,5 @@
+Status: Connected
+Public address: https://33a8df9f-0686-4c08-b3d2-ecc0879d8062.tunnel4.com
+Public address: http://33a8df9f-0686-4c08-b3d2-ecc0879d8062.tunnel4.com
+Target address: http://localhost:5000
+
